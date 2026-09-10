@@ -1,4 +1,4 @@
-# Windows Validation & Scenario Testing — ProAssist AI / Friday
+# Windows Validation & Scenario Testing — ProAssist AI
 
 This document records the **manual and scripted end-to-end Windows scenarios** executed natively on Windows 11. It clearly distinguishes between **VERIFIED**, **AUTOMATED ONLY**, and **NOT VERIFIED** capabilities.
 
@@ -16,6 +16,18 @@ This document records the **manual and scripted end-to-end Windows scenarios** e
 
 | Scenario / Subsystem | Validation Status | Verification Details |
 |---|:---:|---|
+| **Phase 6.6: Local SQLite Event Creation** | **VERIFIED** | Scenario 1: Creates local event with start/end time in `calendar_events`. |
+| **Phase 6.6: Conflict Detection Warning** | **VERIFIED** | Scenario 2: Overlapping event generation emits `CalendarConflictWarning`. |
+| **Phase 6.6: Ambiguity Detection & Prompt** | **VERIFIED** | Scenario 3: Multiple matching events produce structured `AmbiguityResult`. |
+| **Phase 6.6: Google Calendar Truthful Auth** | **VERIFIED** | Scenario 4: Unconfigured Google provider returns `AUTHENTICATION_ERROR`. |
+| **Phase 6.6: Mock Provider Error Sim** | **VERIFIED** | Scenario 5: Simulates `TIMEOUT`, `FAILURE`, and `RATE_LIMITED` gracefully. |
+| **Phase 6.6: Gated Event Deletion** | **VERIFIED** | Scenario 6: `delete_event` halts for explicit `CONFIRMATION`. |
+| **Phase 6.6: Idempotency Protection** | **VERIFIED** | Scenario 7: Idempotency lease prevents duplicate calendar events. |
+| **Phase 6.6: Multilingual Routing EN/HI/KN**| **VERIFIED** | Scenario 8: TaskRouter routes calendar intents across English, Hindi, Kannada. |
+| **Phase 6.6: UTC Normalization** | **VERIFIED** | Scenario 9: Converts local offsets into standardized UTC ISO strings. |
+| **Phase 6.6: Event Search & Retrieval** | **VERIFIED** | Scenario 10: Window and query searches return matched event payloads. |
+| **Phase 6.6: Event Update Modification** | **VERIFIED** | Scenario 11: Modifies event title, time, and location with conflict check. |
+| **Phase 6.6: CalendarAgent Full Dispatch** | **VERIFIED** | Scenario 12: End-to-end execution of calendar agent actions via router. |
 | **Phase 6.5: Mock Search & Citations** | **VERIFIED** | Scenario 1: Mock search execution returning structured, numbered citations. |
 | **Phase 6.5: DuckDuckGo Live Search** | **VERIFIED** | Scenario 2: Live HTTP query via `SafeHttpClient` returning factual Wikipedia result. |
 | **Phase 6.5: Query Boundary Validation** | **VERIFIED** | Scenario 3: Bounded query length ($\le 300$ chars), whitespace and empty rejection. |

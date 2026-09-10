@@ -1,4 +1,4 @@
-# Network & External Provider Architecture — ProAssist AI / Friday
+# Network & External Provider Architecture — ProAssist AI
 
 ProAssist AI strictly limits external network communication. All outbound HTTP calls are wrapped inside an enforced safety client that enforces timeouts, redacts secrets from logs, and maps network errors into deterministic provider states.
 
@@ -60,3 +60,14 @@ External provider outcomes map to a standard enumeration (`core/provider_status.
   - Rate Limiting: Handles 429 natively as `ProviderStatus.RATE_LIMITED`.
 - **`MockSearchProvider`** (`search/providers/mock.py`):
   - Deterministic canned results and simulated error states for testing and offline runs.
+
+### 3.3 Calendar Providers (`calendar_integration/providers/`)
+- **`LocalCalendarProvider`** (`calendar_integration/providers/local.py`):
+  - 100% offline local SQLite implementation.
+  - Zero outbound networking, instant local execution.
+- **`MockCalendarProvider`** (`calendar_integration/providers/mock.py`):
+  - Deterministic in-memory provider for unit tests, offline development, and error simulation (`TIMEOUT`, `FAILURE`, `RATE_LIMITED`, `AUTHENTICATION_ERROR`).
+- **`GoogleCalendarProvider`** (`calendar_integration/providers/google.py`):
+  - REST endpoint: `https://www.googleapis.com/calendar/v3`
+  - Authentication: Bearer token loaded from `CredentialStore`.
+  - Zero Fake OAuth: If unconfigured, truthfully returns `ProviderStatus.AUTHENTICATION_ERROR` without simulating credentials.

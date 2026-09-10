@@ -1,13 +1,13 @@
 # New Account Handoff — Developer Onboarding Guide
 
 > **CRITICAL NOTICE FOR NEW DEVELOPERS & AI AGENTS**:  
-> Read this document completely BEFORE inspecting or editing code. This is an existing, mature, 12-phase project with **367 passing tests** on Windows 11. Do NOT refactor the architecture, do NOT rewrite completed phases, and do NOT install unapproved dependencies.
+> Read this document completely BEFORE inspecting or editing code. This is an existing, mature, 12-phase project with **416 passing tests** on Windows 11. Do NOT refactor the architecture, do NOT rewrite completed phases, and do NOT install unapproved dependencies.
 
 ---
 
-## 1. What is ProAssist AI / Friday?
+## 1. What is ProAssist AI?
 
-ProAssist AI is an intelligent, secure, local-first personal voice assistant engineered for Windows 11. Inspired by the Stark Industries FRIDAY HUD aesthetic, it provides seamless desktop automation, personal information management (contacts, tasks, reminders, notes, weather), and conversational intelligence.
+ProAssist AI is an intelligent, secure, local-first personal voice assistant engineered for Windows 11. It provides seamless desktop automation, personal information management (contacts, tasks, reminders, notes, weather), and conversational intelligence.
 
 ### Core Distinctions
 - **Local-First**: Does not need an internet connection for core desktop actions, file management, contacts, tasks, or notes.
@@ -32,10 +32,10 @@ ProAssist AI is an intelligent, secure, local-first personal voice assistant eng
 |---|---|
 | **Python Version** | Python 3.11.9 (64-bit) |
 | **Operating System** | Windows 11 Professional / Home |
-| **Total Automated Tests** | **367 passed** |
+| **Total Automated Tests** | **416 passed** |
 | **Test Failures / Errors** | **0 failed, 0 errors, 0 regressions** |
-| **Current Completed Phase**| **Phase 6.4 — Weather & Information** |
-| **Next Target Phase** | **Phase 6.5 — Web Search** |
+| **Current Completed Phase**| **Phase 6.6 — Calendar Integration** |
+| **Next Target Phase** | **Phase 6.7 — Email Integration** |
 
 ---
 
@@ -46,13 +46,15 @@ ProAssist AI is an intelligent, secure, local-first personal voice assistant eng
 3. **Phase 3 (Voice Authentication)**: Local voice biometrics, spectral centroid extraction, user enrollment, encrypted voice profiles, OpenWakeWord architecture.
 4. **Phase 3.1 (Security Hardening)**: Truthful wake-word readiness states (`MODEL NOT READY`), session timeouts (300s), lockout policies (3 failed attempts), constant-time comparisons.
 5. **Phase 4 (Structured Planning)**: Google Gemini 2.5 Flash provider, structured JSON `ExecutionPlanSchema`, strict `PlanValidator` (tool allowlist, max 10 steps), local/cloud badges.
-6. **Phase 5 (FRIDAY HUD Frontend)**: Holographic AI Visualizer with audio-reactive radial pulses, top telemetry bar, conversation stream, confirmation cards, settings panel.
+6. **Phase 5 (Desktop HUD Frontend)**: Holographic AI Visualizer with audio-reactive radial pulses, top telemetry bar, conversation stream, confirmation cards, settings panel.
 7. **Phase 5.1 (Floating Desktop Refinement)**: Floating ORB mode, semi-expanded PANEL mode, EXPANDED window, system tray integration, fixed confirmation state consistency.
 8. **Phase 6.0 (Integration Foundation)**: `SafeHttpClient`, `ProviderStatus` enum, `IdempotencyManager`, `WindowsCredentialStore` (DPAPI), `DevFallbackStore`, `oauth_accounts` table.
 9. **Phase 6.1 (Contacts & Entity Resolution)**: `ContactService`, `ContactRepository`, `ContactResolver` (alias & relationship resolution: "call mom"), `ContactAgent` (6 tools).
 10. **Phase 6.2 (Tasks & Reminders)**: `TaskService`, `TaskRepository`, `TaskResolver`, natural language `TimeParser`, `RecurrenceManager`, active `ReminderScheduler`, `TaskAgent` (11 tools).
 11. **Phase 6.3 (Notes & Personal Knowledge)**: `NotesService`, `NotesRepository`, `NoteResolver`, SQLite FTS5 BM25 ranked search, zero ambient recording invariant, minimal LLM snippets (<= 3), `NotesAgent` (8 tools).
 12. **Phase 6.4 (Weather & Information)**: `WeatherService`, `WeatherCacheManager`, `LocationResolver`, Open-Meteo REST integration via `SafeHttpClient`, zero silent geolocation, zero ambient networking, `WeatherAgent` (5 tools).
+13. **Phase 6.5 (Web Search)**: Targeted web search with DuckDuckGo Lite and Brave Search, secret redaction, non-browser boundaries, `WebSearchAgent` (2 tools).
+14. **Phase 6.6 (Calendar Integration)**: Local SQLite calendar store (`calendars`, `calendar_events`), `CalendarService`, `LocalCalendarProvider`, `MockCalendarProvider`, `GoogleCalendarProvider` (zero fake OAuth), conflict warnings, `CalendarAgent` (7 tools).
 
 ---
 
@@ -67,7 +69,7 @@ ProAssist AI is an intelligent, secure, local-first personal voice assistant eng
 4. **Zero Ambient Networking & Zero Silent Geolocation**:
    Never add background threads polling external APIs or checking device GPS/IP location.
 5. **Preserve Test Baseline**:
-   All 367 existing tests must pass before and after any new feature is merged.
+   All 416 existing tests must pass before and after any new feature is merged.
 
 ---
 

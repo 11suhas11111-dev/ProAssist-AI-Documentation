@@ -1,6 +1,6 @@
-# Database Schema Reference — ProAssist AI / Friday
+# Database Schema Reference — ProAssist AI
 
-This document is the authoritative schema reference for all **19 tables** in `proassist.db` as defined in `memory/database.py`.
+This document is the authoritative schema reference for all **21 tables** in `proassist.db` as defined in `memory/database.py`.
 
 ---
 
@@ -315,4 +315,51 @@ CREATE TABLE weather_cache (
 );
 CREATE INDEX idx_weather_cache_key ON weather_cache(location_key, cache_type);
 CREATE INDEX idx_weather_cache_exp ON weather_cache(expires_at);
+```
+
+---
+
+## 7. Calendar Tables (Phase 6.6)
+
+### `calendars`
+Local and synchronized external calendar accounts and categories.
+```sql
+CREATE TABLE calendars (
+    id           TEXT PRIMARY KEY, -- UUID or 'primary'
+    name         TEXT NOT NULL,
+    provider     TEXT NOT NULL DEFAULT 'local', -- local | google | mock
+    color        TEXT NOT NULL DEFAULT '#2563EB',
+    is_default   INTEGER NOT NULL DEFAULT 0,
+    created_at   TEXT NOT NULL,
+    updated_at   TEXT NOT NULL
+);
+CREATE INDEX idx_calendars_provider ON calendars(provider);
+CREATE INDEX idx_calendars_default  ON calendars(is_default);
+```
+
+### `calendar_events`
+Scheduled calendar events with start/end UTC ISO timestamps and metadata.
+```sql
+CREATE TABLE calendar_events (
+    id             TEXT PRIMARY KEY, -- UUID
+    calendar_id    TEXT NOT NULL,
+    title          TEXT NOT NULL,
+    description    TEXT,
+    location       TEXT,
+    start_time     TEXT NOT NULL, -- UTC ISO-8601
+    end_time       TEXT NOT NULL, -- UTC ISO-8601
+    all_day        INTEGER NOT NULL DEFAULT 0,
+    recurrence_rule TEXT,         -- e.g. "DAILY", "WEEKLY"
+    external_id    TEXT,          -- ID in Google / external calendar
+    status         TEXT NOT NULL DEFAULT 'CONFIRMED', -- CONFIRMED | TENTATIVE | CANCELLED
+    created_at     TEXT NOT NULL,
+    updated_at     TEXT NOT NULL,
+    FOREIGN KEY (calendar_id) REFERENCES calendars(id) ON DELETE CASCADE
+);
+CREATE INDEX idx_cal_events_calendar   ON calendar_events(calendar_id);
+CREATE INDEX idx_cal_events_start      ON calendar_events(start_time);
+CREATE INDEX idx_cal_events_end        ON calendar_events(end_time);
+CREATE INDEX idx_cal_events_status     ON calendar_events(status);
+CREATE INDEX idx_cal_events_external   ON calendar_events(external_id);
+CREATE INDEX idx_cal_events_time_range ON calendar_events(start_time, end_time);
 ```

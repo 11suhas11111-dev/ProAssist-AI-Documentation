@@ -1,10 +1,10 @@
-# ProAssist AI / Friday — Documentation & Development Handoff
+# ProAssist AI — Documentation & Development Handoff
 
-**ProAssist AI** (internally codenamed **Friday**) is an intelligent, secure, multilingual, local-first personal desktop voice assistant built for **Windows 11** in **Python 3.11**. It combines a floating, HUD-style desktop interface (inspired by Stark Industries / FRIDAY) with a deterministic, security-gated multi-agent execution architecture, local speech and biometric processing, and cloud LLM planning.
+**ProAssist AI** is an intelligent, secure, multilingual, local-first personal desktop voice assistant built for **Windows 11** in **Python 3.11**. It combines a floating, HUD-style desktop interface (with a high-tech desktop HUD aesthetic) with a deterministic, security-gated multi-agent execution architecture, local speech and biometric processing, and cloud LLM planning.
 
-> **Current Status**: **Phase 6.4 Complete** (Weather & Information)  
-> **Test Baseline**: **367 passed, 0 failed, 0 errors, 0 regressions**  
-> **Next Phase**: **Phase 6.5 — Web Search**
+> **Current Status**: **Phase 6.6 Complete** (Calendar Integration)  
+> **Test Baseline**: **416 passed, 0 failed, 0 errors, 0 regressions**  
+> **Next Phase**: **Phase 6.7 — Email Integration**
 
 ---
 
@@ -36,13 +36,13 @@
 | **Voice Interaction Pipeline**| **IMPLEMENTED** | PyAudio/sounddevice 16kHz capture, WebRTC VAD, Faster-Whisper local STT, Edge-TTS fallback. |
 | **Voice Biometrics** | **IMPLEMENTED** | Spectral centroid speaker verification, enrollment, session lockout, encrypted profiles. |
 | **Wake Word Detection** | **PARTIAL** | OpenWakeWord integration ready; custom `"Hey ProAssist"` acoustic model **NOT READY**. |
-| **Floating HUD UI** | **IMPLEMENTED** | PySide6 FRIDAY floating HUD with ORB/PANEL/EXPANDED modes, radial visualizer, status indicators. |
+| **Floating HUD UI** | **IMPLEMENTED** | PySide6 floating desktop HUD with ORB/PANEL/EXPANDED modes, radial visualizer, status indicators. |
 | **Contacts & Entity Resolution**| **IMPLEMENTED** | Canonical name normalization, alias matching, relationship queries ("call mom"), SQLite storage. |
 | **Local Tasks & Reminders** | **IMPLEMENTED** | Natural-language time parsing, recurring rules (daily, weekly), SQLite persistence, active scheduler. |
 | **Notes & Personal Knowledge** | **IMPLEMENTED** | SQLite FTS5 BM25 ranked full-text search, explicit intent only, privacy-bounded LLM snippets (<= 3). |
 | **Weather & Information** | **IMPLEMENTED** | Open-Meteo REST API via `SafeHttpClient`, SQLite cache (30m/3h TTL), truthful freshness states (`LIVE`/`CACHED`/`STALE`/`UNAVAILABLE`). |
-| **Web Search & Browsing** | **PLANNED** | Scheduled for Phase 6.5. Strictly unbuilt currently. |
-| **Calendar Integration** | **PLANNED** | Scheduled for Phase 6.6. |
+| **Web Search & Information** | **IMPLEMENTED** | Targeted privacy-preserving web search via DuckDuckGo/Brave with factual citations. |
+| **Calendar Integration** | **IMPLEMENTED** | Local-first SQLite calendar, conflict detection prompts, Google Calendar (zero fake OAuth), 7 tools. |
 | **Email Integration** | **PLANNED** | Scheduled for Phase 6.7. |
 | **WhatsApp / Messaging** | **PLANNED** | Scheduled for Phase 6.8. |
 | **Cross-Service Workflows** | **PLANNED** | Scheduled for Phase 6.9. |
@@ -81,11 +81,11 @@ This repository serves as the definitive architecture and handoff knowledge base
 - [**SECURITY_ARCHITECTURE.md**](SECURITY_ARCHITECTURE.md): Authentication levels, credential management, DPAPI, and audit trails.
 - [**PRIVACY_ARCHITECTURE.md**](PRIVACY_ARCHITECTURE.md): Local-first data isolation, secret redaction, and cloud data minimization.
 - [**DATA_ARCHITECTURE.md**](DATA_ARCHITECTURE.md): SQLite storage patterns, connection lifecycle, and transactional integrity.
-- [**DATABASE_SCHEMA.md**](DATABASE_SCHEMA.md): Complete DDL, column types, relationships, and indexes for all 19 database tables.
-- [**AGENT_TOOL_ARCHITECTURE.md**](AGENT_TOOL_ARCHITECTURE.md): Complete catalog of all 6 agents and 50 registered tools.
+- [**DATABASE_SCHEMA.md**](DATABASE_SCHEMA.md): Complete DDL, column types, relationships, and indexes for all 21 database tables.
+- [**AGENT_TOOL_ARCHITECTURE.md**](AGENT_TOOL_ARCHITECTURE.md): Complete catalog of all 8 agents and 59 registered tools.
 - [**LLM_ARCHITECTURE.md**](LLM_ARCHITECTURE.md): Gemini provider integration, structured JSON planning, and safety guardrails.
 - [**VOICE_ARCHITECTURE.md**](VOICE_ARCHITECTURE.md): Audio capture, VAD, STT, TTS, and biometrics pipeline.
-- [**UI_ARCHITECTURE.md**](UI_ARCHITECTURE.md): PySide6 FRIDAY floating HUD, orbital visualizer, and telemetry cards.
+- [**UI_ARCHITECTURE.md**](UI_ARCHITECTURE.md): PySide6 floating desktop HUD, orbital visualizer, and telemetry cards.
 - [**NETWORK_PROVIDER_ARCHITECTURE.md**](NETWORK_PROVIDER_ARCHITECTURE.md): `SafeHttpClient`, error mapping, and external service contracts.
 
 ### Operations & Planning
@@ -101,13 +101,15 @@ This repository serves as the definitive architecture and handoff knowledge base
 - [**Phase 3: Voice Authentication & Wake Word**](phases/PHASE_3.md)
 - [**Phase 3.1: Security Hardening**](phases/PHASE_3_1.md)
 - [**Phase 4: Structured Task Planning & Intelligence**](phases/PHASE_4.md)
-- [**Phase 5: FRIDAY Desktop HUD**](phases/PHASE_5.md)
+- [**Phase 5: Desktop HUD**](phases/PHASE_5.md)
 - [**Phase 5.1: Floating Desktop UI Refinement**](phases/PHASE_5_1.md)
 - [**Phase 6.0: Integration Foundation & Credential Store**](phases/PHASE_6_0.md)
 - [**Phase 6.1: Contacts & Entity Resolution**](phases/PHASE_6_1.md)
 - [**Phase 6.2: Tasks & Reminders Subsystem**](phases/PHASE_6_2.md)
 - [**Phase 6.3: Notes & Personal Knowledge**](phases/PHASE_6_3.md)
 - [**Phase 6.4: Weather & Information Service**](phases/PHASE_6_4.md)
+- [**Phase 6.5: Web Search & Information Retrieval**](phases/PHASE_6_5.md)
+- [**Phase 6.6: Calendar Integration**](phases/PHASE_6_6.md)
 
 ### Validation & Verification
 - [**TEST_RESULTS.md**](validation/TEST_RESULTS.md): Full pytest run logs and test suite metrics.

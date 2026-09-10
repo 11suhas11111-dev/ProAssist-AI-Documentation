@@ -1,4 +1,4 @@
-# System Architecture — ProAssist AI / Friday
+# System Architecture — ProAssist AI
 
 ProAssist AI is structured as a modular, single-process, multi-agent assistant application running natively on **Windows 11**. It enforces a strict **Hybrid Edge-Cloud** computing topology: all deterministic system tasks, file operations, personal contacts, reminders, and notes execute locally at the edge, while unstructured reasoning and natural-language planning escalate to cloud LLMs (Google Gemini).
 
@@ -71,7 +71,9 @@ ProAssist AI is structured as a modular, single-process, multi-agent assistant a
 |   ├── ContactAgent  ──► Contact tools (resolve aliases, lookup, CRUD)       |
 |   ├── TaskAgent     ──► Task & Reminder tools (natural time, scheduler)     |
 |   ├── NotesAgent    ──► Personal Knowledge tools (SQLite FTS5 BM25 search)  |
-|   └── WeatherAgent  ──► Weather tools (Open-Meteo REST via SafeHttpClient)  |
+|   ├── WeatherAgent  ──► Weather tools (Open-Meteo REST via SafeHttpClient)  |
+|   ├── WebSearchAgent──► Web search & citation tools (DDG/Brave SafeHttp)     |
+|   └── CalendarAgent ──► Calendar scheduling & conflict tools (SQLite/OAuth)  |
 +──────────────────────────────────────┬──────────────────────────────────────+
                                        │ (Local I/O, SQLite, Network)
                                        ▼
@@ -117,13 +119,15 @@ ProAssist AI is structured as a modular, single-process, multi-agent assistant a
 - **AuditLogger**: Commits every execution attempt, parameters, calling user status, and result to the SQLite `audit_logs` table.
 
 ### 2.5 Multi-Agent Execution Layer (`agents/`, `tools/`)
-The system employs 6 specialized domain agents inheriting from `BaseAgent`:
+The system employs 8 specialized domain agents inheriting from `BaseAgent`:
 1. `SystemAgent`: Desktop process and hardware management via Windows APIs.
 2. `FileAgent`: Safe filesystem operations with destination boundary checks.
 3. `ContactAgent`: Contact address book and multi-criteria entity resolution.
 4. `TaskAgent`: Todo task management, natural time parsing, and active reminder scheduling.
 5. `NotesAgent`: Full-text search personal knowledge base backed by SQLite FTS5.
 6. `WeatherAgent`: Weather intelligence and caching backed by Open-Meteo REST API.
+7. `WebSearchAgent`: Targeted web search and factual citation retrieval.
+8. `CalendarAgent`: Calendar scheduling, event retrieval, and conflict warning management.
 
 ---
 

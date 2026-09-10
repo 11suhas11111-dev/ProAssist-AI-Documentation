@@ -1,6 +1,6 @@
 # Agent & Tool Architecture — Complete Inventory
 
-ProAssist AI features a multi-agent execution hierarchy comprising **7 specialized domain agents** and **52 registered tools**. Every tool is strictly governed by `PermissionManager` risk ratings and `ToolRegistry` schema contracts.
+ProAssist AI features a multi-agent execution hierarchy comprising **8 specialized domain agents** and **59 registered tools**. Every tool is strictly governed by `PermissionManager` risk ratings and `ToolRegistry` schema contracts.
 
 ---
 
@@ -15,7 +15,8 @@ ProAssist AI features a multi-agent execution hierarchy comprising **7 specializ
 | **`notes_agent`** | `NotesAgent` | Personal knowledge base, SQLite FTS5 BM25 full-text search. | 8 |
 | **`weather_agent`**| `WeatherAgent`| Weather forecasts and location management via Open-Meteo REST API. | 5 |
 | **`web_search_agent`**| `WebSearchAgent`| Targeted web search and factual citation retrieval. | 2 |
-| **Total** | | | **52** |
+| **`calendar_agent`**| `CalendarAgent`| Calendar scheduling, event retrieval, conflict warnings. | 7 |
+| **Total** | | | **59** |
 
 ---
 
@@ -119,3 +120,17 @@ ProAssist AI features a multi-agent execution hierarchy comprising **7 specializ
 |---|---|:---:|:---:|:---:|
 | `web_search` | Executes privacy-preserving web search with factual citations | `LOW` | `AUTHENTICATED` | No |
 | `get_search_providers`| Lists registered and active web search providers | `LOW` | `AUTHENTICATED` | No |
+
+---
+
+### 2.8 Calendar Agent Tools (`agents/calendar_agent.py`)
+
+| Tool Name | Description | Risk Level | Required Auth | Confirmation? |
+|---|---|:---:|:---:|:---:|
+| `list_calendars` | Lists available local and connected calendars | `LOW` | `AUTHENTICATED` | No |
+| `list_events` | Lists events within a specified date/time window | `LOW` | `AUTHENTICATED` | No |
+| `get_event` | Retrieves detailed information for a specific event | `LOW` | `AUTHENTICATED` | No |
+| `search_events` | Searches calendar events by keyword query | `LOW` | `AUTHENTICATED` | No |
+| `create_event` | Schedules new event with conflict warning support | `MEDIUM` | `AUTHENTICATED` | No |
+| `update_event` | Modifies existing event time, title, or location | `MEDIUM` | `AUTHENTICATED` | No |
+| `delete_event` | Permanently removes calendar event | `HIGH` | `CONFIRMATION` | **YES** |

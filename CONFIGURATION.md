@@ -1,4 +1,4 @@
-# Configuration Guide — ProAssist AI / Friday
+# Configuration Guide — ProAssist AI
 
 ProAssist AI follows a **hierarchical configuration architecture**:
 1. Defaults are defined in `config/config.yaml`.
@@ -87,6 +87,16 @@ weather:
   current_cache_ttl_seconds: 1800  # 30 min
   forecast_cache_ttl_seconds: 10800 # 3 hours
   request_timeout_seconds: 10.0
+search:
+  primary_provider: duckduckgo  # duckduckgo | brave | mock
+  timeout_seconds: 10.0
+  max_results: 5
+
+calendar:
+  primary_provider: local       # local | google | mock
+  default_calendar_id: primary
+  conflict_detection: true
+  timezone: UTC
 ```
 
 ---

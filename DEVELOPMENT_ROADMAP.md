@@ -1,4 +1,4 @@
-# Development Roadmap (Phases 6.5 – 6.10) — ProAssist AI / Friday
+# Development Roadmap (Phases 6.6 – 6.10) — ProAssist AI
 
 This document outlines the **architectural blueprint for future implementation phases**. Development must proceed sequentially without skipping phases or prematurely building future infrastructure.
 
@@ -9,35 +9,23 @@ This document outlines the **architectural blueprint for future implementation p
 ### Objective
 Provide ProAssist AI with the ability to perform targeted, real-time web searches and extract clean factual information without turning the LLM into an unrestricted web browser.
 
-### Key Architectural Constraints
-1. **Provider Abstraction**: Create `SearchProvider` protocol with concrete implementations:
-   - `DuckDuckGoSearchProvider` (privacy-friendly, no API key).
-   - `BraveSearchProvider` / `GoogleSearchProvider` (API key driven).
-   - `MockSearchProvider` (offline testing).
-2. **Safe HTTP Client Only**: All search queries must route through `SafeHttpClient`.
-3. **Strict URL & Content Restrictions**:
-   - Prohibit arbitrary HTML execution, JavaScript execution, or downloading binaries.
-   - Extract plain text snippets only.
-4. **Truthful Citations**: Returned results must include clean source titles and URLs.
-5. **Security**: Search tools registered under `web_search_agent` with `LOW` risk and `AUTHENTICATED` requirement.
-
 ---
 
-## 2. Phase 6.6 — Calendar Integration (NEXT AUTHORIZED PHASE)
+## 2. Phase 6.6 — Calendar Integration (COMPLETE)
 
 ### Objective
 Integrate local SQLite calendar event scheduling with optional cloud calendar synchronization (Google Calendar / Microsoft Outlook via OAuth).
 
-### Key Architectural Constraints
-1. Local-first SQLite calendar store (`calendar_events` table).
-2. Connected account metadata stored in `oauth_accounts`.
-3. Refresh tokens stored exclusively in `WindowsCredentialStore`.
-4. Conflict detection: Warn user before creating overlapping meetings.
-5. Multi-participant invites require explicit user confirmation.
+### Key Architectural Deliverables
+1. **Local SQLite Storage**: Complete local offline calendar event management in `calendars` and `calendar_events` tables.
+2. **Provider Abstraction**: Pluggable `CalendarProvider` supporting `LocalCalendarProvider`, `MockCalendarProvider`, and `GoogleCalendarProvider`.
+3. **Zero Fake OAuth**: Truthful `AUTHENTICATION_ERROR` reporting when credentials are missing; zero token fabrication.
+4. **Conflict Detection**: Non-destructive `CalendarConflictWarning` prompting rather than silent overriding or auto-rejection.
+5. **Agent & Tools**: `CalendarAgent` exposing 7 tools with strict risk classification (`delete_event` requires `CONFIRMATION`).
 
 ---
 
-## 3. Phase 6.7 — Email Integration
+## 3. Phase 6.7 — Email Integration (NEXT AUTHORIZED PHASE)
 
 ### Objective
 Read, search, draft, and send emails via IMAP/SMTP and Gmail/Outlook APIs.

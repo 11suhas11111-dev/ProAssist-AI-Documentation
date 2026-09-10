@@ -1,6 +1,6 @@
 # Security Invariants — Verified Checklist
 
-This document specifies the **non-negotiable security invariants** that govern the ProAssist AI / Friday codebase. Every invariant in this list is enforced by source code and covered by automated test suites.
+This document specifies the **non-negotiable security invariants** that govern the ProAssist AI codebase. Every invariant in this list is enforced by source code and covered by automated test suites.
 
 ---
 
@@ -68,3 +68,13 @@ This document specifies the **non-negotiable security invariants** that govern t
 - [x] **Invariant 6.3**: Search queries must be sanitized by `SecretRedactor` to prevent accidental credential leakage.
 - [x] **Invariant 6.4**: Truthful Citations: The assistant must never fabricate URLs, domain names, or source citations.
 - [x] **Invariant 6.5**: Search queries are strictly bounded to 300 characters and non-empty strings.
+
+---
+
+## 7. Calendar Integration Safety
+
+- [x] **Invariant 7.1**: Zero Fake OAuth: Unconfigured external calendar integration must truthfully report `ProviderStatus.AUTHENTICATION_ERROR` without fabricating credentials.
+- [x] **Invariant 7.2**: Offline-First Local Store: Local calendar operations execute 100% locally against SQLite with zero outbound network calls.
+- [x] **Invariant 7.3**: Conflict Warnings as Collaborative Prompts: Overlapping events generate explicit `CalendarConflictWarning` notifications rather than silently overriding or auto-rejecting.
+- [x] **Invariant 7.4**: Gated Destruction: `delete_event` is strictly classified as `RiskLevel.HIGH` and requires `AuthLevel.CONFIRMATION`.
+- [x] **Invariant 7.5**: Timezone Normalization: All event timestamps are parsed, converted, and stored in normalized UTC ISO-8601 strings.

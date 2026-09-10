@@ -1,4 +1,4 @@
-# Testing Strategy & Test Suite Reference — ProAssist AI / Friday
+# Testing Strategy & Test Suite Reference — ProAssist AI
 
 ProAssist AI enforces a rigorous automated testing discipline. Every architectural boundary, security policy, database migration, and agent tool is covered by comprehensive pytest test suites.
 
@@ -6,8 +6,8 @@ ProAssist AI enforces a rigorous automated testing discipline. Every architectur
 
 ## 1. Test Suite Metrics
 
-- **Current Verified Baseline**: **391 passed, 0 failed, 0 errors, 0 regressions**
-- **Execution Time**: ~38.20 seconds on Windows 11 (Python 3.11.9)
+- **Current Verified Baseline**: **416 passed, 0 failed, 0 errors, 0 regressions**
+- **Execution Time**: ~48.84 seconds on Windows 11 (Python 3.11.9)
 - **Framework**: `pytest 9.1+` with `pytest-asyncio 0.24+` and `pytest-cov 5.0+`
 - **Configuration**: `pytest.ini` with `asyncio_mode = auto`
 
@@ -54,7 +54,8 @@ ProAssist AI enforces a rigorous automated testing discipline. Every architectur
 | `tests/test_wake_word.py` | 3 | Wake-word engine interface and event triggering. |
 | `tests/test_wake_word_engine.py` | 5 | OpenWakeWord frame processing and sensitivity threshold. |
 | `tests/test_wake_word_hardening.py` | 9 | Truthful status reporting (`MODEL_MISSING`, `NOT_READY`). |
-| **Total** | **391** | **100% Passing** |
+| `tests/test_phase6_calendar.py` | 25 | Calendar CRUD, conflict warnings, ambiguity resolution, local SQLite, Google/mock providers, idempotency leasing. |
+| **Total** | **416** | **100% Passing** |
 
 ---
 
