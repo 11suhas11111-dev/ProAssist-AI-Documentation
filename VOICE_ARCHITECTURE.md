@@ -1,4 +1,4 @@
-# Voice Architecture & Speech Processing — ProAssist AI / Friday
+# Voice Architecture & Speech Processing — ProAssist AI
 
 ProAssist AI features a **local-first, privacy-preserving voice pipeline** supporting multi-language automatic speech recognition (ASR), voice activity detection (VAD), speaker biometric verification, and neural text-to-speech (TTS).
 

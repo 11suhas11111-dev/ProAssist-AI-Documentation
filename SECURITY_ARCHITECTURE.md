@@ -1,4 +1,4 @@
-# Security Architecture — ProAssist AI / Friday
+# Security Architecture — ProAssist AI
 
 ProAssist AI implements a **defense-in-depth, least-privilege security model** designed to protect the local Windows environment, sensitive user credentials, and personal data from unauthorized physical access, malicious prompt injection, or rogue autonomous execution.
 

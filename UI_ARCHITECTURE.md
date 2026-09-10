@@ -1,6 +1,6 @@
-# UI Architecture — ProAssist AI / Friday
+# UI Architecture — ProAssist AI
 
-The user interface of ProAssist AI is a **futuristic, floating desktop HUD** developed natively in **PySide6 (Qt 6.7+)**. Inspired by the Stark Industries FRIDAY / JARVIS aesthetic, it emphasizes unobtrusive desktop presence, dark neon telemetry, dynamic radial waveforms, and strict state reflection.
+The user interface of ProAssist AI is a **futuristic, floating desktop HUD** developed natively in **PySide6 (Qt 6.7+)**. Inspired by the modern holographic desktop HUD aesthetic, it emphasizes unobtrusive desktop presence, dark neon telemetry, dynamic radial waveforms, and strict state reflection.
 
 ---
 
@@ -56,7 +56,7 @@ UI state transitions are driven strictly by real backend events emitted from `Or
 
 ### 3.1 Top Telemetry Bar (`ui/widgets/top_bar.py`)
 Provides constant visibility into system state without opening settings:
-- **Title Badge**: `PROASSIST AI // FRIDAY`
+- **Title Badge**: `PROASSIST AI`
 - **Online Indicator**: `[● ONLINE]`
 - **Authentication Badge**: `[AUTH: PUBLIC]` or `[AUTH: OWNER]`
 - **Processing Location**: `[LOCAL]` (0ms cloud latency) or `[CLOUD]` (Gemini engaged)

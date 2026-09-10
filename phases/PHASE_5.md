@@ -1,4 +1,4 @@
-# Phase 5: FRIDAY HUD Desktop Frontend
+# Phase 5: Desktop HUD Frontend
 
 **Status**: COMPLETE  
 **Baseline Test Count**: 245 passed  
@@ -7,7 +7,7 @@
 ---
 
 ## 1. Objective
-Transform the ProAssist AI desktop interface into a futuristic, holographic HUD inspired by the Stark Industries FRIDAY / JARVIS aesthetic using PySide6.
+Transform the ProAssist AI desktop interface into a futuristic, holographic HUD inspired by modern holographic desktop HUD aesthetics using PySide6.
 
 ---
 

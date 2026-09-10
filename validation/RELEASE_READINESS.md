@@ -1,4 +1,4 @@
-# Release Readiness & Transition Gate — ProAssist AI / Friday
+# Release Readiness & Transition Gate — ProAssist AI
 
 **Evaluation Date**: September 10, 2026  
 **Evaluated Milestone**: Phase 6.4 (Weather & Information)  
@@ -34,6 +34,6 @@
 
 ## 2. Formal Transition Authorization
 
-ProAssist AI / Friday has successfully satisfied all architectural, security, and verification requirements for **Phase 6.4**.
+ProAssist AI has successfully satisfied all architectural, security, and verification requirements for **Phase 6.4**.
 
 **The project is formally authorized to proceed to Phase 6.5 (Web Search).**

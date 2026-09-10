@@ -1,4 +1,4 @@
-# Data Architecture — ProAssist AI / Friday
+# Data Architecture — ProAssist AI
 
 ProAssist AI utilizes a **single-file, local-first embedded SQLite database** (`proassist.db`) managed asynchronously via `aiosqlite`. The data layer is engineered for zero-maintenance desktop operation, absolute crash resilience, and high-performance concurrent read/write transactions.
 

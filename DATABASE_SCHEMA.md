@@ -322,44 +322,53 @@ CREATE INDEX idx_weather_cache_exp ON weather_cache(expires_at);
 ## 7. Calendar Tables (Phase 6.6)
 
 ### `calendars`
-Local and synchronized external calendar accounts and categories.
+Local and synchronized external calendar accounts and collections.
 ```sql
 CREATE TABLE calendars (
-    id           TEXT PRIMARY KEY, -- UUID or 'primary'
-    name         TEXT NOT NULL,
-    provider     TEXT NOT NULL DEFAULT 'local', -- local | google | mock
-    color        TEXT NOT NULL DEFAULT '#2563EB',
-    is_default   INTEGER NOT NULL DEFAULT 0,
-    created_at   TEXT NOT NULL,
-    updated_at   TEXT NOT NULL
+    id                   TEXT    PRIMARY KEY, -- UUID string
+    account_id           TEXT    NOT NULL DEFAULT 'local',
+    provider             TEXT    NOT NULL DEFAULT 'local', -- 'local' | 'mock' | 'google' | 'outlook'
+    name                 TEXT    NOT NULL,
+    normalized_name      TEXT    NOT NULL,
+    description          TEXT,
+    timezone             TEXT    NOT NULL DEFAULT 'UTC',
+    is_primary           INTEGER NOT NULL DEFAULT 1,
+    is_read_only         INTEGER NOT NULL DEFAULT 0,
+    sync_token           TEXT,
+    created_at           TEXT    NOT NULL,
+    updated_at           TEXT    NOT NULL
 );
-CREATE INDEX idx_calendars_provider ON calendars(provider);
-CREATE INDEX idx_calendars_default  ON calendars(is_default);
+CREATE INDEX idx_calendars_account    ON calendars(account_id);
+CREATE INDEX idx_calendars_provider   ON calendars(provider);
+CREATE INDEX idx_calendars_norm_name  ON calendars(normalized_name);
 ```
 
 ### `calendar_events`
 Scheduled calendar events with start/end UTC ISO timestamps and metadata.
 ```sql
 CREATE TABLE calendar_events (
-    id             TEXT PRIMARY KEY, -- UUID
-    calendar_id    TEXT NOT NULL,
-    title          TEXT NOT NULL,
-    description    TEXT,
-    location       TEXT,
-    start_time     TEXT NOT NULL, -- UTC ISO-8601
-    end_time       TEXT NOT NULL, -- UTC ISO-8601
-    all_day        INTEGER NOT NULL DEFAULT 0,
-    recurrence_rule TEXT,         -- e.g. "DAILY", "WEEKLY"
-    external_id    TEXT,          -- ID in Google / external calendar
-    status         TEXT NOT NULL DEFAULT 'CONFIRMED', -- CONFIRMED | TENTATIVE | CANCELLED
-    created_at     TEXT NOT NULL,
-    updated_at     TEXT NOT NULL,
+    id                   TEXT    PRIMARY KEY, -- UUID string
+    calendar_id          TEXT    NOT NULL,
+    title                TEXT    NOT NULL,
+    normalized_title     TEXT    NOT NULL,
+    description          TEXT,
+    location             TEXT,
+    start_time           TEXT    NOT NULL, -- UTC ISO string
+    end_time             TEXT    NOT NULL, -- UTC ISO string
+    timezone             TEXT    NOT NULL DEFAULT 'UTC',
+    is_all_day           INTEGER NOT NULL DEFAULT 0,
+    recurrence_rule      TEXT,
+    attendees            TEXT    NOT NULL DEFAULT '[]', -- JSON list of strings
+    status               TEXT    NOT NULL DEFAULT 'CONFIRMED', -- 'CONFIRMED' | 'TENTATIVE' | 'CANCELLED'
+    provider_event_id    TEXT,
+    etag                 TEXT,
+    created_at           TEXT    NOT NULL,
+    updated_at           TEXT    NOT NULL,
     FOREIGN KEY (calendar_id) REFERENCES calendars(id) ON DELETE CASCADE
 );
-CREATE INDEX idx_cal_events_calendar   ON calendar_events(calendar_id);
-CREATE INDEX idx_cal_events_start      ON calendar_events(start_time);
-CREATE INDEX idx_cal_events_end        ON calendar_events(end_time);
-CREATE INDEX idx_cal_events_status     ON calendar_events(status);
-CREATE INDEX idx_cal_events_external   ON calendar_events(external_id);
-CREATE INDEX idx_cal_events_time_range ON calendar_events(start_time, end_time);
+CREATE INDEX idx_cal_events_cal_id    ON calendar_events(calendar_id);
+CREATE INDEX idx_cal_events_start     ON calendar_events(start_time);
+CREATE INDEX idx_cal_events_end       ON calendar_events(end_time);
+CREATE INDEX idx_cal_events_norm_titl ON calendar_events(normalized_title);
+CREATE INDEX idx_cal_events_status    ON calendar_events(status);
 ```

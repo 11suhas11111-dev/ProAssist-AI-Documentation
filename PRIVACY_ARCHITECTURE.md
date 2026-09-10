@@ -1,4 +1,4 @@
-# Privacy Architecture — ProAssist AI / Friday
+# Privacy Architecture — ProAssist AI
 
 Privacy is the foundational design constraint of ProAssist AI. Unlike commercial smart speakers and cloud assistants that continuously stream ambient audio or upload complete personal databases to cloud servers, ProAssist AI is engineered around **strict data minimization and local edge isolation**.
 

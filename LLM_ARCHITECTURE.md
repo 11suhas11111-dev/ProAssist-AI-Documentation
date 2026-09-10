@@ -1,4 +1,4 @@
-# LLM Architecture & Safety Guardrails — ProAssist AI / Friday
+# LLM Architecture & Safety Guardrails — ProAssist AI
 
 ProAssist AI treats Large Language Models as **untrusted, sandboxed reasoning engines**. The LLM is strictly used to parse ambiguous natural language into structured JSON execution plans. It has zero direct execution authority, zero database access, and cannot bypass security or confirmation barriers.
 

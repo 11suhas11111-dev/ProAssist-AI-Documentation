@@ -7,7 +7,7 @@
 ---
 
 ## 1. Objective
-Implement a local-first, privacy-preserving web search capability for ProAssist AI / Friday that retrieves accurate, factual information with truthful, structured citations while strictly prohibiting arbitrary browser automation (Zero Playwright, Zero Selenium, Zero Headless Browsers).
+Implement a local-first, privacy-preserving web search capability for ProAssist AI that retrieves accurate, factual information with truthful, structured citations while strictly prohibiting arbitrary browser automation (Zero Playwright, Zero Selenium, Zero Headless Browsers).
 
 ---
 

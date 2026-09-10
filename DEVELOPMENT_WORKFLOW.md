@@ -1,4 +1,4 @@
-# Development Workflow & Engineering Standards — ProAssist AI / Friday
+# Development Workflow & Engineering Standards — ProAssist AI
 
 This document outlines the **mandatory engineering practices, testing protocols, and development rules** for contributors and autonomous coding agents working on ProAssist AI.
 

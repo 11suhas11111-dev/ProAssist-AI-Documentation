@@ -1,4 +1,4 @@
-# Dependency Inventory — ProAssist AI / Friday
+# Dependency Inventory — ProAssist AI
 
 All dependencies are pinned and tracked in `requirements.txt`. The application runs on Python 3.11.9 (64-bit) on Windows 11.
 
@@ -16,7 +16,7 @@ All dependencies are pinned and tracked in `requirements.txt`. The application r
 | **`pyyaml`** | `>=6.0.2` | Loading and parsing `config/config.yaml`. | Phase 1 |
 | **`python-dotenv`** | `>=1.0.1` | Loading `.env` secrets and overrides. | Phase 1 |
 | **`loguru`** | `>=0.7.2` | Structured, colored, rotating audit and debug logging. | Phase 1 |
-| **`PySide6`** | `>=6.7.0` | Native Qt 6 GUI framework for FRIDAY HUD. | Phase 1 / 5 |
+| **`PySide6`** | `>=6.7.0` | Native Qt 6 GUI framework for desktop HUD. | Phase 1 / 5 |
 | **`aiosqlite`** | `>=0.20.0` | Asynchronous SQLite driver for `proassist.db`. | Phase 1 |
 | **`cryptography`** | `>=43.0.0` | Fernet symmetric encryption for credentials and profiles. | Phase 1 |
 | **`psutil`** | `>=6.1.0` | Windows CPU, RAM, disk, and process telemetry. | Phase 1 |

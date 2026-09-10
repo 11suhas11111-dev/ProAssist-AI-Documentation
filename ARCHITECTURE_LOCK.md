@@ -1,6 +1,6 @@
 # Architecture Lock — Invariant Specifications
 
-This document defines the **frozen architectural contracts** of ProAssist AI / Friday. Future developers and autonomous coding agents are strictly prohibited from refactoring, removing, or bypassing these patterns.
+This document defines the **frozen architectural contracts** of ProAssist AI. Future developers and autonomous coding agents are strictly prohibited from refactoring, removing, or bypassing these patterns.
 
 ---
 
