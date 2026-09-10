@@ -58,3 +58,13 @@ This document specifies the **non-negotiable security invariants** that govern t
 - [x] **Invariant 5.3**: Zero Silent Geolocation: ProAssist AI never queries Windows location services, GPS hardware, or IP lookup APIs.
 - [x] **Invariant 5.4**: Zero Ambient Networking: No background polling timers exist for weather or external integrations.
 - [x] **Invariant 5.5**: Weather cache data is never falsely presented as fresh live data; stale cache degradation requires explicit notice.
+
+---
+
+## 6. Web Search & Anti-Browser Safety
+
+- [x] **Invariant 6.1**: Strictly zero browser automation (Playwright, Selenium, Puppeteer, headless browsers, JS execution) are permitted.
+- [x] **Invariant 6.2**: Anti-browser tools are permanently forbidden in `ToolRegistry.FORBIDDEN_TOOLS`.
+- [x] **Invariant 6.3**: Search queries must be sanitized by `SecretRedactor` to prevent accidental credential leakage.
+- [x] **Invariant 6.4**: Truthful Citations: The assistant must never fabricate URLs, domain names, or source citations.
+- [x] **Invariant 6.5**: Search queries are strictly bounded to 300 characters and non-empty strings.

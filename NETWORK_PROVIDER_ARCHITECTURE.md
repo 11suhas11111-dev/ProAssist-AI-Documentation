@@ -15,19 +15,8 @@ class SafeHttpClient:
         self._max_retries = max_retries
         self._redactor = SecretRedactor()
 
-    async def get(self, url: str, params: dict | None = None, headers: dict | None = None) -> HttpResponse:
-        # 1. Strips sensitive tokens before logging
-        clean_headers = self._redactor.sanitize_headers(headers)
-        logger.debug(f"HTTP GET {url} | headers={clean_headers}")
-
-        # 2. Strict timeout and error translation
-        try:
-            response = await self._client.get(url, params=params, headers=headers, timeout=self._timeout)
-            return self._handle_response(response)
-        except httpx.TimeoutException:
-            return HttpResponse(status=ProviderStatus.TIMEOUT, error="Connection timed out")
-        except httpx.RequestError as exc:
-            return HttpResponse(status=ProviderStatus.NETWORK_ERROR, error=str(exc))
+    async def get(self, url: str, params: dict | None = None, headers: dict | None = None) -> tuple[ProviderStatus, Any, str | None]:
+        ...
 ```
 
 ---
@@ -39,12 +28,14 @@ External provider outcomes map to a standard enumeration (`core/provider_status.
 | ProviderStatus | Description | Application Behavior |
 |---|---|---|
 | **`SUCCESS`** | Request completed successfully (HTTP 200). | Normal processing. |
-| **`TIMEOUT`** | Connection or read timeout exceeded (8–10s). | Degrades to cache; notifies user without freezing UI. |
-| **`NETWORK_ERROR`**| DNS failure, connection refused, or socket error. | Falls back to local offline mode. |
-| **`RATE_LIMITED`** | HTTP 429 Too Many Requests. | Enforces exponential backoff; warns user cleanly. |
-| **`SERVICE_ERROR`**| HTTP 500 / 502 / 503 upstream server error. | Reports server outage without exposing tracebacks. |
-| **`PAYLOAD_ERROR`**| Malformed or unexpected JSON response structure. | Rejects payload; logs diagnostic failure. |
-| **`UNAVAILABLE`** | Provider credentials missing or service offline. | Disables dependent tool; prompts user. |
+| **`TIMEOUT`** | Connection or read timeout exceeded (8–10s). | Degrades to cache/fallback; notifies user without freezing UI. |
+| **`FAILURE`** | Network error, DNS failure, or 5xx server error. | Falls back gracefully or alerts user. |
+| **`AUTHENTICATION_ERROR`** | Missing or invalid API key / token (HTTP 401). | Alerts user to configure credentials. |
+| **`AUTHORIZATION_ERROR`**  | Insufficient scopes or forbidden resource (HTTP 403). | Denies request with clear explanation. |
+| **`RATE_LIMITED`** | HTTP 429 Too Many Requests. | Warns user cleanly; avoids hammering provider. |
+| **`NOT_FOUND`** | Resource missing (HTTP 404). | Graceful not-found report. |
+| **`CONFLICT`** | Version or state collision (HTTP 409). | Prompts user or manages idempotency. |
+| **`UNKNOWN`** | Outcome indeterminate. | Treats as potential failure. |
 
 ---
 
@@ -58,12 +49,14 @@ External provider outcomes map to a standard enumeration (`core/provider_status.
 - **Privacy Guarantee**: Zero user tracking, zero device identifiers sent.
 - **Cache TTL**: 30 minutes for current weather, 3 hours for multi-day forecasts.
 
-### 3.2 Google Gemini API (`core/llm/gemini_provider.py`)
-- **Endpoint**: Google Generative AI API (`gemini-2.5-flash`).
-- **Authentication**: API key stored in Windows Credential Manager or `GEMINI_API_KEY` environment variable.
-- **Payload Privacy**: Passes through `SecretRedactor` before transmission. Personal database is never dumped in bulk.
-
-### 3.3 Microsoft Edge TTS (`voice/tts_provider.py`)
-- **Endpoint**: WSS / HTTPS speech synthesis endpoint.
-- **Authentication**: Ephemeral websocket handshake (free).
-- **Usage**: Converts response strings to high-quality Indian English, Hindi, and Kannada audio.
+### 3.2 Web Search Providers (`search/providers/`)
+- **`DuckDuckGoSearchProvider`** (`search/providers/duckduckgo.py`):
+  - Endpoints: `https://lite.duckduckgo.com/lite/` and `https://api.duckduckgo.com/`
+  - Authentication: None (zero API key, privacy-friendly).
+  - Privacy Guarantee: Zero user tracking, zero personal information transmitted.
+- **`BraveSearchProvider`** (`search/providers/brave.py`):
+  - Endpoint: `https://api.search.brave.com/res/v1/web/search`
+  - Authentication: API key (`X-Subscription-Token`) loaded from `CredentialStore`.
+  - Rate Limiting: Handles 429 natively as `ProviderStatus.RATE_LIMITED`.
+- **`MockSearchProvider`** (`search/providers/mock.py`):
+  - Deterministic canned results and simulated error states for testing and offline runs.

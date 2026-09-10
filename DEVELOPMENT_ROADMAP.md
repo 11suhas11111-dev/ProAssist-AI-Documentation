@@ -4,7 +4,7 @@ This document outlines the **architectural blueprint for future implementation p
 
 ---
 
-## 1. Phase 6.5 — Web Search & Information Retrieval (NEXT AUTHORIZED PHASE)
+## 1. Phase 6.5 — Web Search & Information Retrieval (COMPLETE)
 
 ### Objective
 Provide ProAssist AI with the ability to perform targeted, real-time web searches and extract clean factual information without turning the LLM into an unrestricted web browser.
@@ -19,11 +19,11 @@ Provide ProAssist AI with the ability to perform targeted, real-time web searche
    - Prohibit arbitrary HTML execution, JavaScript execution, or downloading binaries.
    - Extract plain text snippets only.
 4. **Truthful Citations**: Returned results must include clean source titles and URLs.
-5. **Security**: Search tools registered under `web_agent` with `LOW` risk and `AUTHENTICATED` requirement.
+5. **Security**: Search tools registered under `web_search_agent` with `LOW` risk and `AUTHENTICATED` requirement.
 
 ---
 
-## 2. Phase 6.6 — Calendar Integration
+## 2. Phase 6.6 — Calendar Integration (NEXT AUTHORIZED PHASE)
 
 ### Objective
 Integrate local SQLite calendar event scheduling with optional cloud calendar synchronization (Google Calendar / Microsoft Outlook via OAuth).
@@ -64,16 +64,11 @@ Send messages and notifications to resolved contacts via WhatsApp Web / Cloud AP
 ## 5. Phase 6.9 — Cross-Service Workflows
 
 ### Objective
-Orchestrate multi-step, multi-agent automated tasks (e.g., *"Find meeting notes from yesterday, extract the action items, create tasks for them, and email a summary to John"*).
-
-### Key Architectural Constraints
-1. `Orchestrator` decomposes composite user intent into multi-agent execution plans.
-2. `IdempotencyManager` tracks state transitions across steps.
-3. High-risk intermediate steps halt for user confirmation before proceeding.
+Coordinate cross-domain workflows linking Contacts, Tasks, Notes, Calendar, and Communication without expanding individual tool permissions.
 
 ---
 
 ## 6. Phase 6.10 — Reliability & Security Hardening
 
 ### Objective
-Perform end-to-end stress testing, offline resilience audits, memory leak profiling, and packaging.
+Systemic resilience, memory leak elimination, offline fallback stress tests, and distribution preparation.

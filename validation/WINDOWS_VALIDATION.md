@@ -16,6 +16,14 @@ This document records the **manual and scripted end-to-end Windows scenarios** e
 
 | Scenario / Subsystem | Validation Status | Verification Details |
 |---|:---:|---|
+| **Phase 6.5: Mock Search & Citations** | **VERIFIED** | Scenario 1: Mock search execution returning structured, numbered citations. |
+| **Phase 6.5: DuckDuckGo Live Search** | **VERIFIED** | Scenario 2: Live HTTP query via `SafeHttpClient` returning factual Wikipedia result. |
+| **Phase 6.5: Query Boundary Validation** | **VERIFIED** | Scenario 3: Bounded query length ($\le 300$ chars), whitespace and empty rejection. |
+| **Phase 6.5: Secret Redaction in Queries** | **VERIFIED** | Scenario 4: Registered and pattern secrets sanitized with `[REDACTED]` before dispatch. |
+| **Phase 6.5: Provider Fallback Degradation**| **VERIFIED** | Scenario 5: Automatic failover from failing primary provider to working secondary. |
+| **Phase 6.5: Multilingual Routing (EN/HI/KN)**| **VERIFIED** | Scenario 6: TaskRouter directs search requests across English, Hindi, and Kannada. |
+| **Phase 6.5: Anti-Browser Barriers** | **VERIFIED** | Scenario 7: `PermissionManager`, `ToolRegistry`, and `FORBIDDEN_TOOLS` enforce non-browser invariants. |
+| **Phase 6.5: WebSearchAgent Dispatch** | **VERIFIED** | Scenario 8: Agent execution dispatch returning synthesized truthful citations. |
 | **Phase 6.4: Weather Live Request** | **VERIFIED** | Scenario A: Live forecast retrieved for Bengaluru via Open-Meteo REST API. |
 | **Phase 6.4: Weather Alias Resolution** | **VERIFIED** | Scenario B: Resolves "Mysore" to "Mysuru" using local alias dictionary. |
 | **Phase 6.4: Default Location Usage** | **VERIFIED** | Scenario C: Querying "what's the weather here" maps to stored default location. |

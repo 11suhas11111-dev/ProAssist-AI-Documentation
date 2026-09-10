@@ -1,6 +1,6 @@
 # Agent & Tool Architecture — Complete Inventory
 
-ProAssist AI features a multi-agent execution hierarchy comprising **6 specialized domain agents** and **50 registered tools**. Every tool is strictly governed by `PermissionManager` risk ratings and `ToolRegistry` schema contracts.
+ProAssist AI features a multi-agent execution hierarchy comprising **7 specialized domain agents** and **52 registered tools**. Every tool is strictly governed by `PermissionManager` risk ratings and `ToolRegistry` schema contracts.
 
 ---
 
@@ -14,7 +14,8 @@ ProAssist AI features a multi-agent execution hierarchy comprising **6 specializ
 | **`task_agent`** | `TaskAgent` | Todo tasks, natural language scheduling, active reminders. | 11 |
 | **`notes_agent`** | `NotesAgent` | Personal knowledge base, SQLite FTS5 BM25 full-text search. | 8 |
 | **`weather_agent`**| `WeatherAgent`| Weather forecasts and location management via Open-Meteo REST API. | 5 |
-| **Total** | | | **50** |
+| **`web_search_agent`**| `WebSearchAgent`| Targeted web search and factual citation retrieval. | 2 |
+| **Total** | | | **52** |
 
 ---
 
@@ -58,12 +59,12 @@ ProAssist AI features a multi-agent execution hierarchy comprising **6 specializ
 
 | Tool Name | Description | Risk Level | Required Auth | Confirmation? |
 |---|---|:---:|:---:|:---:|
-| `create_contact` | Creates contact with aliases, phones, emails | `MEDIUM` | `AUTHENTICATED` | No |
-| `get_contact` | Retrieves contact by ID or name resolution | `LOW` | `AUTHENTICATED` | No |
-| `search_contacts` | Queries contacts by text or relationship | `LOW` | `AUTHENTICATED` | No |
-| `list_contacts` | Returns paginated list of all contacts | `LOW` | `AUTHENTICATED` | No |
-| `update_contact` | Updates contact details or relationships | `MEDIUM` | `AUTHENTICATED` | No |
-| `delete_contact` | Removes contact and all child records | `HIGH` | `CONFIRMATION` | **YES** |
+| `create_contact` | Creates contact record with phone/email/relationship | `LOW` | `AUTHENTICATED` | No |
+| `get_contact` | Retrieves detailed contact information | `LOW` | `AUTHENTICATED` | No |
+| `search_contacts`| Searches contacts by name, alias, email, phone | `LOW` | `AUTHENTICATED` | No |
+| `update_contact` | Updates existing contact fields | `LOW` | `AUTHENTICATED` | No |
+| `delete_contact` | Deletes contact record | `HIGH` | `CONFIRMATION` | **YES** |
+| `list_contacts` | Lists all stored contacts | `LOW` | `AUTHENTICATED` | No |
 
 ---
 
@@ -71,17 +72,17 @@ ProAssist AI features a multi-agent execution hierarchy comprising **6 specializ
 
 | Tool Name | Description | Risk Level | Required Auth | Confirmation? |
 |---|---|:---:|:---:|:---:|
-| `create_task` | Creates todo task with priority and due date | `MEDIUM` | `AUTHENTICATED` | No |
-| `get_task` | Retrieves task details by ID or title match | `LOW` | `AUTHENTICATED` | No |
-| `list_tasks` | Lists tasks filtered by status | `LOW` | `AUTHENTICATED` | No |
-| `complete_task` | Marks task status as COMPLETED | `LOW` | `AUTHENTICATED` | No |
-| `cancel_task` | Sets task status to CANCELLED | `LOW` | `AUTHENTICATED` | No |
-| `delete_task` | Permanently removes task record | `HIGH` | `CONFIRMATION` | **YES** |
-| `create_reminder`| Schedules reminder with natural time parsing | `MEDIUM` | `AUTHENTICATED` | No |
-| `get_reminder` | Retrieves reminder details | `LOW` | `AUTHENTICATED` | No |
+| `create_task` | Creates new todo task with priority/due date | `LOW` | `AUTHENTICATED` | No |
+| `list_tasks` | Lists active tasks with filtering | `LOW` | `AUTHENTICATED` | No |
+| `get_task` | Retrieves specific task details | `LOW` | `AUTHENTICATED` | No |
+| `update_task` | Updates title, priority, or due date | `LOW` | `AUTHENTICATED` | No |
+| `complete_task` | Marks task as completed | `LOW` | `AUTHENTICATED` | No |
+| `delete_task` | Permanently deletes task | `HIGH` | `CONFIRMATION` | **YES** |
+| `create_reminder`| Schedules reminder notification | `LOW` | `AUTHENTICATED` | No |
 | `list_reminders` | Lists upcoming scheduled reminders | `LOW` | `AUTHENTICATED` | No |
-| `cancel_reminder`| Cancels scheduled reminder in scheduler | `LOW` | `AUTHENTICATED` | No |
-| `delete_reminder`| Permanently deletes reminder | `HIGH` | `CONFIRMATION` | **YES** |
+| `cancel_reminder`| Cancels an active reminder | `LOW` | `AUTHENTICATED` | No |
+| `snooze_reminder`| Postpones reminder by specified duration | `LOW` | `AUTHENTICATED` | No |
+| `dismiss_reminder`| Acknowledges and dismisses reminder | `LOW` | `AUTHENTICATED` | No |
 
 ---
 
@@ -89,14 +90,14 @@ ProAssist AI features a multi-agent execution hierarchy comprising **6 specializ
 
 | Tool Name | Description | Risk Level | Required Auth | Confirmation? |
 |---|---|:---:|:---:|:---:|
-| `create_note` | Stores personal note (explicit intent only) | `MEDIUM` | `AUTHENTICATED` | No |
-| `get_note` | Retrieves note content by title or UUID | `LOW` | `AUTHENTICATED` | No |
-| `list_notes` | Lists active notes with pagination | `LOW` | `AUTHENTICATED` | No |
-| `search_notes` | Performs SQLite FTS5 BM25 ranked search | `LOW` | `AUTHENTICATED` | No |
-| `update_note` | Appends or replaces note content | `MEDIUM` | `AUTHENTICATED` | No |
-| `archive_note` | Sets status to ARCHIVED | `MEDIUM` | `AUTHENTICATED` | No |
-| `restore_note` | Restores ARCHIVED note back to ACTIVE | `MEDIUM` | `AUTHENTICATED` | No |
-| `delete_note` | Permanently deletes note and FTS5 index | `HIGH` | `CONFIRMATION` | **YES** |
+| `create_note` | Creates note and builds FTS5 search index | `LOW` | `AUTHENTICATED` | No |
+| `get_note` | Retrieves note content and metadata | `LOW` | `AUTHENTICATED` | No |
+| `search_notes` | Searches notes using FTS5 BM25 ranked ranking | `LOW` | `AUTHENTICATED` | No |
+| `update_note` | Updates note content or title | `LOW` | `AUTHENTICATED` | No |
+| `archive_note` | Moves note to archived state | `LOW` | `AUTHENTICATED` | No |
+| `restore_note` | Restores archived note | `LOW` | `AUTHENTICATED` | No |
+| `delete_note` | Permanently removes note and search index | `HIGH` | `CONFIRMATION` | **YES** |
+| `list_notes` | Lists notes with state filters | `LOW` | `AUTHENTICATED` | No |
 
 ---
 
@@ -104,8 +105,17 @@ ProAssist AI features a multi-agent execution hierarchy comprising **6 specializ
 
 | Tool Name | Description | Risk Level | Required Auth | Confirmation? |
 |---|---|:---:|:---:|:---:|
-| `get_current_weather` | Fetches current weather (live or cached) | `LOW` | `AUTHENTICATED` | No |
-| `get_weather_forecast`| Fetches multi-day forecast | `LOW` | `AUTHENTICATED` | No |
-| `get_weather_location`| Returns configured default location | `LOW` | `AUTHENTICATED` | No |
-| `set_weather_location`| Sets user default location in SQLite | `MEDIUM` | `AUTHENTICATED` | No |
-| `clear_weather_location`| Removes configured default location | `LOW` | `AUTHENTICATED` | No |
+| `get_current_weather` | Retrieves temperature and condition | `LOW` | `AUTHENTICATED` | No |
+| `get_weather_forecast`| Retrieves multi-day weather forecast | `LOW` | `AUTHENTICATED` | No |
+| `get_weather_location`| Reads configured default weather location | `LOW` | `AUTHENTICATED` | No |
+| `set_weather_location`| Sets default weather location in DB | `LOW` | `AUTHENTICATED` | No |
+| `clear_weather_location`| Clears default weather location | `LOW` | `AUTHENTICATED` | No |
+
+---
+
+### 2.7 Web Search Agent Tools (`agents/web_search_agent.py`)
+
+| Tool Name | Description | Risk Level | Required Auth | Confirmation? |
+|---|---|:---:|:---:|:---:|
+| `web_search` | Executes privacy-preserving web search with factual citations | `LOW` | `AUTHENTICATED` | No |
+| `get_search_providers`| Lists registered and active web search providers | `LOW` | `AUTHENTICATED` | No |

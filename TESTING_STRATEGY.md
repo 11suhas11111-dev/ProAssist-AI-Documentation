@@ -6,8 +6,8 @@ ProAssist AI enforces a rigorous automated testing discipline. Every architectur
 
 ## 1. Test Suite Metrics
 
-- **Current Verified Baseline**: **367 passed, 0 failed, 0 errors, 0 regressions**
-- **Execution Time**: ~75 seconds on Windows 11 (Python 3.11.9)
+- **Current Verified Baseline**: **391 passed, 0 failed, 0 errors, 0 regressions**
+- **Execution Time**: ~38.20 seconds on Windows 11 (Python 3.11.9)
 - **Framework**: `pytest 9.1+` with `pytest-asyncio 0.24+` and `pytest-cov 5.0+`
 - **Configuration**: `pytest.ini` with `asyncio_mode = auto`
 
@@ -34,6 +34,7 @@ ProAssist AI enforces a rigorous automated testing discipline. Every architectur
 | `tests/test_phase6_idempotency.py` | 8 | Idempotency leasing, deduplication of mutating tool steps. |
 | `tests/test_phase6_notes.py` | 19 | Notes CRUD, FTS5 BM25 ranked search, privacy snippet boundary. |
 | `tests/test_phase6_provider_status.py` | 5 | ProviderStatus enum error mapping in SafeHttpClient. |
+| `tests/test_phase6_search.py` | 24 | Search providers, query validation, secret redacting, citations, anti-browser. |
 | `tests/test_phase6_security.py` | 8 | PermissionManager AuthLevels, SecretRedactor sanitization. |
 | `tests/test_phase6_tasks_reminders.py` | 21 | Task CRUD, natural time parsing, recurring rules, scheduler. |
 | `tests/test_phase6_weather.py` | 25 | Open-Meteo REST, SQLite cache (LIVE/CACHED/STALE/UNAVAIL), zero silent geolocation. |
@@ -53,19 +54,18 @@ ProAssist AI enforces a rigorous automated testing discipline. Every architectur
 | `tests/test_wake_word.py` | 3 | Wake-word engine interface and event triggering. |
 | `tests/test_wake_word_engine.py` | 5 | OpenWakeWord frame processing and sensitivity threshold. |
 | `tests/test_wake_word_hardening.py` | 9 | Truthful status reporting (`MODEL_MISSING`, `NOT_READY`). |
-| **Total** | **367** | **100% Passing** |
+| **Total** | **391** | **100% Passing** |
 
 ---
 
 ## 3. How to Run the Tests
 
+Execute full test suite:
 ```powershell
-# Run entire test suite quietly
-& "C:\Users\DELL\AppData\Local\Programs\Python\Python311\python.exe" -m pytest -q
+python -m pytest -q
+```
 
-# Run specific subsystem tests
-& "C:\Users\DELL\AppData\Local\Programs\Python\Python311\python.exe" -m pytest tests/test_phase6_weather.py -v
-
-# Run with coverage report
-& "C:\Users\DELL\AppData\Local\Programs\Python\Python311\python.exe" -m pytest --cov=. tests/
+Execute only Phase 6.5 Web Search tests:
+```powershell
+python -m pytest -v tests/test_phase6_search.py
 ```

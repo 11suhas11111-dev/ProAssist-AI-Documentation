@@ -3,10 +3,10 @@
 **Authoritative Project Status Baseline**  
 **Timestamp**: September 10, 2026  
 **Environment**: Windows 11 (64-bit) | Python 3.11.9  
-**Verified Test Count**: **367 passed, 0 failed, 0 errors, 0 regressions**  
+**Verified Test Count**: **391 passed, 0 failed, 0 errors, 0 regressions**  
 **Application Root**: `c:\Users\DELL\OneDrive\Documents\ProAssist AI`  
-**Current Phase**: **Phase 6.4 — Weather & Information (COMPLETE)**  
-**Next Phase**: **Phase 6.5 — Web Search (AUTHORIZED NEXT)**
+**Current Phase**: **Phase 6.5 — Web Search (COMPLETE)**  
+**Next Phase**: **Phase 6.6 — Calendar Integration (AUTHORIZED NEXT)**
 
 ---
 
@@ -26,8 +26,8 @@
 | **Phase 6.2** | Local Tasks & Reminders | **COMPLETE** | 323 passed | `TaskService`, `TaskRepository`, `TaskResolver`, `TimeParser`, `RecurrenceManager`, `ReminderScheduler`, `tasks`/`reminders` schema, `TaskAgent` (11 tools). |
 | **Phase 6.3** | Notes & Personal Knowledge | **COMPLETE** | 342 passed | `NotesService`, `NotesRepository`, `NoteResolver`, SQLite FTS5 BM25 search, zero ambient recording invariant, minimal LLM snippets (<= 3), `NotesAgent` (8 tools). |
 | **Phase 6.4** | Weather & Information | **COMPLETE** | 367 passed | `WeatherService`, `WeatherCacheManager`, `LocationResolver`, Open-Meteo REST via `SafeHttpClient`, zero silent geolocation, zero ambient networking, `WeatherAgent` (5 tools). |
-| **Phase 6.5** | Web Search | **PLANNED** | — | Scheduled next. DuckDuckGo / Brave search provider abstraction, strict URL restrictions, citation preserving, no arbitrary browser scraping. |
-| **Phase 6.6** | Calendar Integration | **PLANNED** | — | Local SQLite calendar + OAuth provider abstraction (Google/Outlook), conflict detection. |
+| **Phase 6.5** | Web Search | **COMPLETE** | 391 passed | `SearchService`, `DuckDuckGoSearchProvider`, `BraveSearchProvider`, `MockSearchProvider`, `SecretRedactor` query sanitization, `WebSearchAgent` (2 tools), non-browser boundaries. |
+| **Phase 6.6** | Calendar Integration | **PLANNED** | — | Scheduled next. Local SQLite calendar + OAuth provider abstraction (Google/Outlook), conflict detection. |
 | **Phase 6.7** | Email Integration | **PLANNED** | — | IMAP/SMTP + OAuth, email parsing, draft creation, strict HIGH-risk sending confirmation. |
 | **Phase 6.8** | WhatsApp / Messaging | **PLANNED** | — | Webhook / API abstraction, recipient resolution, draft-and-confirm UX. |
 | **Phase 6.9** | Cross-Service Workflows | **PLANNED** | — | Multi-agent composite task workflows (e.g. "Draft email to contact about task due tomorrow"). |
@@ -37,15 +37,15 @@
 
 ## 2. Current Subsystem Health & Inventory
 
-- **Active Agents (6)**: `system_agent`, `file_agent`, `contact_agent`, `task_agent`, `notes_agent`, `weather_agent`
-- **Registered Tools (50)**: All validated with explicit risk tiers in `PermissionManager` and schema definitions in `ToolRegistry`.
+- **Active Agents (7)**: `system_agent`, `file_agent`, `contact_agent`, `task_agent`, `notes_agent`, `weather_agent`, `web_search_agent`
+- **Registered Tools (52)**: All validated with explicit risk tiers in `PermissionManager` and schema definitions in `ToolRegistry`.
 - **Database Schema**: 19 tables in `proassist.db` under SQLite WAL mode with cascading foreign keys and indexes.
 - **Test Suite Health**:
-  - `pytest -q`: **367 passed in 75.13 seconds**
+  - `pytest -q`: **391 passed in 38.20 seconds**
   - Failures: **0**
   - Errors: **0**
   - Regressions: **0**
-- **Process Health**: `main._async_init()` startup smoke test cleanly boots all 6 agents, starts performance telemetry, checks voice biometrics, and starts reminder scheduling without warnings or unhandled exceptions.
+- **Process Health**: `main._async_init()` startup smoke test cleanly boots all 7 agents, starts performance telemetry, checks voice biometrics, and starts reminder scheduling without warnings or unhandled exceptions.
 
 ---
 
@@ -54,4 +54,4 @@
 1. **"Hey ProAssist" Custom Wake Word**: The acoustic neural model (`hey_proassist.onnx`) is not yet trained/available. The system truthfully reports `WakeWordStatus.MODEL_MISSING` and displays `[Hey ProAssist MODEL NOT READY]` on the UI. The assistant is triggered via Click / Push-to-Talk (PTT) or built-in test keywords.
 2. **Speaker Verification Algorithm**: Voice biometrics currently utilize local spectral centroid and acoustic feature vectors rather than deep neural d-vectors (e.g. SpeechBrain ECAPA-TDNN).
 3. **Cloud LLM Requirement for Natural Chat**: Free-form reasoning and multi-step conversational planning require a valid `GEMINI_API_KEY`. If unconfigured, direct deterministic keyword commands continue executing 100% locally.
-4. **Zero Web Search (Current Boundary)**: Questions requiring real-time web retrieval cannot browse the live web until Phase 6.5 is implemented.
+4. **Zero Arbitrary Web Automation**: While targeted web search is implemented in Phase 6.5, arbitrary browser automation, headless browsers, and webpage scraping remain strictly prohibited by security architecture.

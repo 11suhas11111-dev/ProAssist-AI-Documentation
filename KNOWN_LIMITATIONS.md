@@ -1,6 +1,6 @@
 # Known Limitations & Technical Boundaries — ProAssist AI / Friday
 
-This document provides a **truthful, candid assessment** of the current technical boundaries and unfinished components of ProAssist AI as of Phase 6.4.
+This document provides a **truthful, candid assessment** of the current technical boundaries and unfinished components of ProAssist AI as of Phase 6.5.
 
 ---
 
@@ -32,7 +32,7 @@ This document provides a **truthful, candid assessment** of the current technica
 
 1. **Cloud LLM Required for Conversational Chat**:
    - Free-form, multi-step natural language reasoning requires an active internet connection and a valid `GEMINI_API_KEY`.
-   - If offline or unconfigured, the assistant continues executing all 50 deterministic direct tools locally, but cannot answer open-ended conversational questions.
-2. **Web Search Strictly Unimplemented (Phase 6.5 Boundary)**:
-   - The assistant CANNOT browse the web, search Google/Bing, or scrape live web pages.
-   - Factual questions ("What is photosynthesis?") are answered purely from Gemini's parametric memory.
+   - If offline or unconfigured, the assistant continues executing all 52 deterministic direct tools locally, but cannot answer open-ended conversational questions.
+2. **Strict Non-Browser Web Search**:
+   - Web search is powered by DuckDuckGo and Brave APIs returning factual text snippets and URLs.
+   - Arbitrary webpage scraping, clicking elements, submitting forms, running JavaScript, or downloading arbitrary binaries are strictly forbidden by architectural design.
