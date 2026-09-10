@@ -78,3 +78,11 @@ This document specifies the **non-negotiable security invariants** that govern t
 - [x] **Invariant 7.3**: Conflict Warnings as Collaborative Prompts: Overlapping events generate explicit `CalendarConflictWarning` notifications rather than silently overriding or auto-rejecting.
 - [x] **Invariant 7.4**: Gated Destruction: `delete_event` is strictly classified as `RiskLevel.HIGH` and requires `AuthLevel.CONFIRMATION`.
 - [x] **Invariant 7.5**: Timezone Normalization: All event timestamps are parsed, converted, and stored in normalized UTC ISO-8601 strings.
+
+## Email Security Invariants (Phase 6.7)
+1. **Header Injection Defense**: Carriage returns and newlines (`\r`, `\n`) are strictly prohibited in email addresses, CC/BCC, and subjects to prevent SMTP header injection.
+2. **Prompt Injection Containment**: Email bodies are enclosed in `<untrusted_email_content>` tags with explicit instructions forbidding execution of commands inside the email content.
+3. **Attachment Validation**: Attachments must be existing regular files <= 25 MB. Executable extensions (`.exe`, `.bat`, `.cmd`, `.ps1`, `.vbs`, `.js`, etc.) are unconditionally rejected.
+4. **HIGH-Risk Send Confirmation**: `send_email` requires explicit confirmation via `ConfirmationManager`. Default button focus is CANCEL.
+5. **Idempotency Lease & UNKNOWN Retry Prohibition**: Send operations acquire an atomic idempotency lease. If an operation yields `UNKNOWN` status, automatic retries are strictly prohibited to prevent duplicate emails.
+6. **Zero Fake OAuth**: Google Mail provider never simulates successful authentication when credentials are missing.

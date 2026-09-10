@@ -71,3 +71,9 @@ External provider outcomes map to a standard enumeration (`core/provider_status.
   - REST endpoint: `https://www.googleapis.com/calendar/v3`
   - Authentication: Bearer token loaded from `CredentialStore`.
   - Zero Fake OAuth: If unconfigured, truthfully returns `ProviderStatus.AUTHENTICATION_ERROR` without simulating credentials.
+
+## Email Providers (`email_integration/providers/`)
+- `LocalEmailProvider`: Completely offline local SQLite provider.
+- `MockEmailProvider`: In-memory deterministic provider with configurable fault injection (`simulate_timeout`, `simulate_rate_limit`, `simulate_auth_error`, `simulate_unknown_status`).
+- `GoogleEmailProvider`: Gmail REST API provider using `SafeHttpClient`. Enforces Zero Fake OAuth — returns `ProviderStatus.AUTHENTICATION_ERROR` if unconfigured.
+- Invariants: Zero ambient networking, no background polling or sync.

@@ -109,3 +109,6 @@ The following tools and actions are **strictly forbidden** and actively rejected
 ## 6. Truthful Cloud Indicator on HUD
 
 Whenever a request is handled by the Cloud LLM, the PySide6 UI immediately displays the `[CLOUD]` badge in the Top Telemetry Bar. Local deterministic commands display `[LOCAL]`. The system never lies about where processing occurred.
+
+### Email Prompt Isolation
+External email bodies retrieved for LLM context are sanitized and isolated inside `<untrusted_email_content>` containment tags with system instructions to treat the content strictly as data, never as executable instructions.

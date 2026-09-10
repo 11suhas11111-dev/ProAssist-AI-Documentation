@@ -65,5 +65,6 @@ tests\test_wake_word.py ...                                              [ 96%]
 tests\test_wake_word_engine.py .....                                     [ 98%]
 tests\test_wake_word_hardening.py .........                              [100%]
 
-============================ 416 passed in 48.84s =============================
+============================ 441 passed in 48.84s =============================
 ```
+| Phase 6.7 | Email Integration | 441 passed | 0 | 0 | 100% | Windows 11 |

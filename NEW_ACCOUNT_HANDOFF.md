@@ -32,7 +32,7 @@ ProAssist AI is an intelligent, secure, local-first personal voice assistant eng
 |---|---|
 | **Python Version** | Python 3.11.9 (64-bit) |
 | **Operating System** | Windows 11 Professional / Home |
-| **Total Automated Tests** | **416 passed** |
+| **Total Automated Tests** | **441 passed** |
 | **Test Failures / Errors** | **0 failed, 0 errors, 0 regressions** |
 | **Current Completed Phase**| **Phase 6.6 — Calendar Integration** |
 | **Next Target Phase** | **Phase 6.7 — Email Integration** |

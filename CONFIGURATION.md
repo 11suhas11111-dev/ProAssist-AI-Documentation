@@ -119,3 +119,13 @@ GEMINI_API_KEY=<YOUR_GEMINI_API_KEY_HERE>
 # Alternative Cloud Provider
 OPENAI_API_KEY=<YOUR_OPENAI_API_KEY_HERE>
 ```
+
+### Email Configuration (`email:`)
+```yaml
+email:
+  default_account_id: "primary"
+  provider: "local"
+  google_enabled: false
+  max_attachment_size_mb: 25
+  default_search_limit: 20
+```

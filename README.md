@@ -3,7 +3,7 @@
 **ProAssist AI** is an intelligent, secure, multilingual, local-first personal desktop voice assistant built for **Windows 11** in **Python 3.11**. It combines a floating, HUD-style desktop interface (with a high-tech desktop HUD aesthetic) with a deterministic, security-gated multi-agent execution architecture, local speech and biometric processing, and cloud LLM planning.
 
 > **Current Status**: **Phase 6.6 Complete** (Calendar Integration)  
-> **Test Baseline**: **416 passed, 0 failed, 0 errors, 0 regressions**  
+> **Test Baseline**: **441 passed, 0 failed, 0 errors, 0 regressions**  
 > **Next Phase**: **Phase 6.7 — Email Integration**
 
 ---
@@ -82,7 +82,7 @@ This repository serves as the definitive architecture and handoff knowledge base
 - [**PRIVACY_ARCHITECTURE.md**](PRIVACY_ARCHITECTURE.md): Local-first data isolation, secret redaction, and cloud data minimization.
 - [**DATA_ARCHITECTURE.md**](DATA_ARCHITECTURE.md): SQLite storage patterns, connection lifecycle, and transactional integrity.
 - [**DATABASE_SCHEMA.md**](DATABASE_SCHEMA.md): Complete DDL, column types, relationships, and indexes for all 21 database tables.
-- [**AGENT_TOOL_ARCHITECTURE.md**](AGENT_TOOL_ARCHITECTURE.md): Complete catalog of all 8 agents and 59 registered tools.
+- [**AGENT_TOOL_ARCHITECTURE.md**](AGENT_TOOL_ARCHITECTURE.md): Complete catalog of all 8 agents and 70 registered tools.
 - [**LLM_ARCHITECTURE.md**](LLM_ARCHITECTURE.md): Gemini provider integration, structured JSON planning, and safety guardrails.
 - [**VOICE_ARCHITECTURE.md**](VOICE_ARCHITECTURE.md): Audio capture, VAD, STT, TTS, and biometrics pipeline.
 - [**UI_ARCHITECTURE.md**](UI_ARCHITECTURE.md): PySide6 floating desktop HUD, orbital visualizer, and telemetry cards.

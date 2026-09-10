@@ -134,3 +134,15 @@ ProAssist AI features a multi-agent execution hierarchy comprising **8 specializ
 | `create_event` | Schedules new event with conflict warning support | `MEDIUM` | `AUTHENTICATED` | No |
 | `update_event` | Modifies existing event time, title, or location | `MEDIUM` | `AUTHENTICATED` | No |
 | `delete_event` | Permanently removes calendar event | `HIGH` | `CONFIRMATION` | **YES** |
+
+### 9. EmailAgent (`agents/email_agent.py`)
+- **Role**: Manages email accounts, searching, drafting, and sending with strict security controls.
+- **Tools (8)**:
+  - `list_email_accounts`: List available email accounts (LOW risk, LOW auth).
+  - `search_email_messages`: Search email metadata by subject, sender, or query (LOW risk, LOW auth).
+  - `get_email_message`: Read full message content with prompt injection isolation (LOW risk, LOW auth).
+  - `create_email_draft`: Create email draft with header injection checks (MEDIUM risk, AUTHENTICATED).
+  - `get_email_draft`: Retrieve draft details (LOW risk, LOW auth).
+  - `update_email_draft`: Update draft subject, body, recipients, or attachments (MEDIUM risk, AUTHENTICATED).
+  - `delete_email_draft`: Delete draft (MEDIUM risk, AUTHENTICATED).
+  - `send_email`: Send email with idempotency lease (HIGH risk, CONFIRMATION).

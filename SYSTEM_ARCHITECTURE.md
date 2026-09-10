@@ -157,3 +157,9 @@ The system employs 8 specialized domain agents inheriting from `BaseAgent`:
  12. AuditLogger records SUCCESS in audit_logs
  13. TTS speaks confirmation: "Report.pdf has been deleted."
 ```
+
+### Email Subsystem (`email_integration/`)
+- `EmailService`: Business logic coordinator.
+- `LocalEmailProvider`, `MockEmailProvider`, `GoogleEmailProvider`.
+- `EmailRepository`: SQLite persistence for accounts, drafts, metadata.
+- `EmailAgent`: 9th agent exposing 8 email tools.

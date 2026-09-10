@@ -66,3 +66,9 @@ Weather intelligence (`weather/`) respects user location boundaries:
 
 - **No Remote Telemetry**: ProAssist AI contains zero telemetry SDKs (no Google Analytics, no Sentry, no Mixpanel).
 - **Local Diagnostics**: System health, CPU usage, and RAM consumption monitored via `psutil` are displayed only on the local PySide6 HUD top bar and written to local rotating logs (`logs/proassist.log`).
+
+## Email Privacy Controls (Phase 6.7)
+- Local SQLite storage for email accounts, drafts, and metadata (`proassist.db`).
+- Zero ambient networking: no background email fetchers, polling daemons, or telemetry.
+- Network access occurs strictly upon explicit user command and through `SafeHttpClient`.
+- Outgoing communication requires explicit user confirmation.

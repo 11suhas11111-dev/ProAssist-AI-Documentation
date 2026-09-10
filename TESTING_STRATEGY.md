@@ -70,3 +70,18 @@ Execute only Phase 6.5 Web Search tests:
 ```powershell
 python -m pytest -v tests/test_phase6_search.py
 ```
+
+### Phase 6.7: Email Integration Test Strategy
+- `tests/test_phase6_email.py` (25 tests):
+  - Models, header injection, prompt injection containment, attachment validation.
+  - SQLite EmailRepository CRUD and draft lifecycle.
+  - LocalEmailProvider offline operations.
+  - MockEmailProvider error simulations (Timeout, Rate Limit, Auth Error, Unknown Status).
+  - GoogleEmailProvider Zero Fake OAuth truthful error reporting.
+  - Deterministic recipient resolution and non-guessing ambiguity halting.
+  - Idempotency leasing, caching, and UNKNOWN retry blocking.
+  - PermissionManager and ConfirmationManager send gate.
+  - 8 email tools execution.
+  - EmailAgent task handling.
+  - Multilingual TaskRouter dispatch (English, Hindi, Kannada).
+- Live validation script: `scratch/test_phase6_7_scenarios.py` (30 live scenarios A to AD).

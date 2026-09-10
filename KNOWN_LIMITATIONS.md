@@ -46,3 +46,6 @@ This document provides a **truthful, candid assessment** of the current technica
    - The provider adheres strictly to Zero Fake OAuth: if unconfigured or lacking valid credentials, it truthfully reports `AUTHENTICATION_ERROR` and will not fabricate authentication or mock external access.
 2. **Local Recurrence Complexity**:
    - Local SQLite calendar events currently store recurrence rules as metadata (e.g. `DAILY`, `WEEKLY`), but full RFC 5545 recurrence expansion (exdates, complex intervals) is bounded to simple recurring patterns. Complex enterprise recurrence handling is deferred to external calendar providers.
+
+### Google Mail OAuth Credentials
+Google Mail integration requires valid OAuth tokens in `CredentialStore`. If unconfigured, it truthfully returns `AUTHENTICATION_ERROR` and does not fabricate authentication. The offline-first local provider and mock provider are fully operational.

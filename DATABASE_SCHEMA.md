@@ -372,3 +372,48 @@ CREATE INDEX idx_cal_events_end       ON calendar_events(end_time);
 CREATE INDEX idx_cal_events_norm_titl ON calendar_events(normalized_title);
 CREATE INDEX idx_cal_events_status    ON calendar_events(status);
 ```
+
+### 11. `email_accounts` Table
+Stores configured email accounts and provider metadata.
+
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | TEXT | PRIMARY KEY | Unique account identifier (e.g. "primary") |
+| `email_address` | TEXT | NOT NULL | User email address |
+| `display_name` | TEXT | | Friendly display name |
+| `provider_type` | TEXT | NOT NULL DEFAULT 'local' | 'local', 'google', or 'mock' |
+| `is_default` | INTEGER | NOT NULL DEFAULT 0 | Default account flag (1/0) |
+| `created_at` | TEXT | NOT NULL | ISO-8601 creation timestamp |
+| `updated_at` | TEXT | NOT NULL | ISO-8601 update timestamp |
+
+### 12. `email_drafts` Table
+Stores composed local email drafts before send.
+
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | TEXT | PRIMARY KEY | Unique draft UUID |
+| `account_id` | TEXT | NOT NULL | FK to email_accounts(id) |
+| `recipient_emails` | TEXT | NOT NULL | JSON array of recipient emails |
+| `cc_emails` | TEXT | | JSON array of CC emails |
+| `bcc_emails` | TEXT | | JSON array of BCC emails |
+| `subject` | TEXT | | Draft email subject |
+| `body` | TEXT | | Draft body text |
+| `attachments` | TEXT | | JSON array of attachment metadata |
+| `created_at` | TEXT | NOT NULL | ISO-8601 creation timestamp |
+| `updated_at` | TEXT | NOT NULL | ISO-8601 update timestamp |
+
+### 13. `email_messages_metadata` Table
+Stores cached email message headers and metadata.
+
+| Column | Type | Constraints | Description |
+|---|---|---|---|
+| `id` | TEXT | PRIMARY KEY | Unique message ID |
+| `account_id` | TEXT | NOT NULL | FK to email_accounts(id) |
+| `thread_id` | TEXT | | Thread identifier |
+| `sender` | TEXT | NOT NULL | Sender email |
+| `recipient_emails` | TEXT | NOT NULL | JSON array of recipient emails |
+| `subject` | TEXT | | Email subject |
+| `snippet` | TEXT | | Short message preview snippet |
+| `timestamp` | TEXT | NOT NULL | ISO-8601 sent/received timestamp |
+| `is_read` | INTEGER | NOT NULL DEFAULT 0 | Read flag (1/0) |
+| `has_attachments` | INTEGER | NOT NULL DEFAULT 0 | Attachments present flag (1/0) |

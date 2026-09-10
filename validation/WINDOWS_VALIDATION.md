@@ -57,3 +57,9 @@ This document records the **manual and scripted end-to-end Windows scenarios** e
 | **Phase 1: Windows Process & Volume** | **VERIFIED** | Real volume control, screenshots saved to Pictures, process management. |
 | **Deep Neural Speaker Verification** | **NOT VERIFIED**| SpeechBrain ECAPA-TDNN not installed; local spectral centroid used instead. |
 | **Custom Wake Word Acoustic Model** | **NOT VERIFIED**| Model `hey_proassist.onnx` is untrained. |
+
+## Phase 6.7: Email Integration Windows Validation
+- **Environment**: Windows 11 Home (64-bit) | Python 3.11.9
+- **Script**: `scratch/test_phase6_7_scenarios.py`
+- **Result**: 30/30 scenarios PASSED (Scenarios A through AD).
+- **Verified Areas**: Account discovery, metadata search, message retrieval, prompt injection containment, draft lifecycle (create/get/update/delete), header injection checks, attachment validation (size, path, extension), contact resolution (exact, ambiguous halt, unknown halt, raw email), permission specs, send confirmation gating, idempotency lease caching, UNKNOWN retry blocking, Zero Fake OAuth, timeout/rate limit simulation, multilingual TaskRouter routing (EN, HI, KN).
